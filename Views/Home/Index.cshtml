@@ -3,6 +3,19 @@
 }
 
 <div class="text-center">
+
+    <form>
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label class="sr-only" for="searchSite">SiteUrl</label>
+                <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="SiteUrl">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2" id="btnSubmit">Submit</button>
+            </div>
+        </div>
+    </form>
+
     <table id="table_id" class="display">
     </table>
 </div>
@@ -19,18 +32,31 @@
         }
 
         function getSiteUserHistory() {
-             $.ajax({
-                'url': "https://localhost:44325/v1/Availability/GetSiteHistoryByUser/" + uuid,
+            $.ajax({
+                'url': "https://localhost:44325/v1/Availability/GetSiteHistoryByUser/" + localStorage.getItem("siteuser"),
                 'method': "GET",
                 'contentType': 'application/json'
             }).done(function (data) {
+                console.log(data);
                 $('#table_id').dataTable({
                     "aaData": data,
+                    "aaSorting": [
+                        [2, "desc"]
+                    ],
                     "columns": [
-                        { "data": "Site" },
-                        { "data": "Status" },
-                        { "data": "Timestamp" }
-                    ]
+                        { "data": "site" },
+                        { "data": "status" },
+                        { "data": "timestamp" }
+                    ],
+                    "createdRow": function (row, data, dataIndex) {
+                        if (data["status"] == true) {
+                             $('td', row).css('background-color', 'Green');
+                        }                       
+                        else if (data["status"] == false) {
+                           $('td', row).css('background-color', 'Orange');
+                        }
+
+                    }
                 })
             })
         }
@@ -38,9 +64,31 @@
         $(document).ready(function () {
             const uuid = localStorage.getItem("siteuser") || uuidv4();
             localStorage.setItem("siteuser", uuid);
-            getSiteUserHistory(uuid);
-        });
+            getSiteUserHistory();
+            $("#btnSubmit").click(function (e) {
+                e.preventDefault();
+                var siteObj = {
+                    UserId: localStorage.getItem("siteuser"),
+                    Site: $("#searchUrl").val()
+                }
 
+                $.ajax({
+                    type: "POST",
+                    url: 'https://localhost:44325/v1/Availability',
+                    data: JSON.stringify(siteObj),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        getSiteUserHistory();
+                    },
+                    error: function (data) {
+                        console.log("Error");
+                    }
+                });
+            });
+        });
     </script>
 
 }
