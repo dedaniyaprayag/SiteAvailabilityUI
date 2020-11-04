@@ -8,7 +8,7 @@
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label class="sr-only" for="searchSite">SiteUrl</label>
-                <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="SiteUrl">
+                <input type="text" class="form-control mb-2" id="searchUrl" placeholder="SiteUrl">
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary mb-2" id="btnSubmit">Submit</button>
@@ -39,6 +39,7 @@
             }).done(function (data) {
                 console.log(data);
                 $('#table_id').dataTable({
+                    "bDestroy": true,
                     "aaData": data,
                     "aaSorting": [
                         [2, "desc"]
@@ -50,10 +51,10 @@
                     ],
                     "createdRow": function (row, data, dataIndex) {
                         if (data["status"] == true) {
-                             $('td', row).css('background-color', 'Green');
-                        }                       
+                            $('td', row).css('background-color', '#6CA580');
+                        }
                         else if (data["status"] == false) {
-                           $('td', row).css('background-color', 'Orange');
+                            $('td', row).css('background-color', '#F32013');
                         }
 
                     }
