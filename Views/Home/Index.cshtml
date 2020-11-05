@@ -8,7 +8,7 @@
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label class="sr-only" for="searchSite">SiteUrl</label>
-                <input type="text" class="form-control mb-2" id="searchUrl" placeholder="SiteUrl">
+                <input type="url" pattern="https?://.+"  class="form-control mb-2" id="searchUrl" placeholder="SiteUrl" required>
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary mb-2" id="btnSubmit">Submit</button>
@@ -31,16 +31,16 @@
             });
         }
 
-        function getSiteUserHistory() {
+        function getSiteUserHistory(uuid) {             
             $.ajax({
-                'url': "https://localhost:44325/v1/Availability/GetSiteHistoryByUser/" + localStorage.getItem("siteuser"),
+                'url': "https://siteavailabilityapi.azurewebsites.net/v1/Availability/GetSiteHistoryByUser/" + uuid,
                 'method': "GET",
                 'contentType': 'application/json'
             }).done(function (data) {
                 console.log(data);
                 $('#table_id').dataTable({
                     "bDestroy": true,
-                    "aaData": data,
+                    "aaData": data,                    
                     "aaSorting": [
                         [2, "desc"]
                     ],
@@ -48,16 +48,7 @@
                         { "data": "site" },
                         { "data": "status" },
                         { "data": "timestamp" }
-                    ],
-                    "createdRow": function (row, data, dataIndex) {
-                        if (data["status"] == true) {
-                            $('td', row).css('background-color', '#6CA580');
-                        }
-                        else if (data["status"] == false) {
-                            $('td', row).css('background-color', '#F32013');
-                        }
-
-                    }
+                    ]                   
                 })
             })
         }
@@ -65,7 +56,9 @@
         $(document).ready(function () {
             const uuid = localStorage.getItem("siteuser") || uuidv4();
             localStorage.setItem("siteuser", uuid);
-            getSiteUserHistory();
+            setInterval(function(){ getSiteUserHistory(uuid);}, 1000);
+
+            
             $("#btnSubmit").click(function (e) {
                 e.preventDefault();
                 var siteObj = {
@@ -75,14 +68,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: 'https://localhost:44325/v1/Availability',
+                    url: 'https://siteavailabilityapi.azurewebsites.net/v1/Availability',
                     data: JSON.stringify(siteObj),
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
                     success: function (data) {
-                        getSiteUserHistory();
+                        getSiteUserHistory(uuid);
                     },
                     error: function (data) {
                         console.log("Error");
