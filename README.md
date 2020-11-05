@@ -14,7 +14,7 @@ Jquery
 1. User can able to search the site availability.
 2. User can able to see their last searched results.
 
-![Optional Text](Images/UI.png)
+![Optional Text](Images/UI1.png)
 
 
 # Deployement
