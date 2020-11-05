@@ -12,7 +12,10 @@ Jquery
 # Features : 
 
 1. User can able to search the site availability.
-2. User can able to see their last searched history in the tabular window.
+2. User can able to see their last searched results.
+
+![Optional Text](Images/UI.png)
+
 
 # Deployement
 This site is deployed in App service in Azure.
