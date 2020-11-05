@@ -4,11 +4,9 @@
 
 ![Optional Text](Images/siteAvailabilityArch.png)
 
-SiteAvailabilityUI
-
 # TechStack : 
-ASP .Net Core 3.1 MVC
-Bootstrap
+ASP .Net Core 3.1 MVC,
+Bootstrap,
 Jquery
 
 # How to access : 
