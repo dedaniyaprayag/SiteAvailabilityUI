@@ -9,10 +9,6 @@ ASP .Net Core 3.1 MVC,
 Bootstrap,
 Jquery
 
-# How to access : 
-
-https://siteavailabilityui.azurewebsites.net/
-
 # Features : 
 
 1. User can able to search the site availability.
@@ -26,8 +22,3 @@ This site is deployed in App service in Azure.
 AppInsights
 
 ![Optional Text](Images/SiteAvailablityTelemetry.png)
-
-
-# SiteAvailabilityApi.Tests
-
-Added Unit Tests for SiteAvailability API
