@@ -9,10 +9,6 @@ ASP .Net Core 3.1 MVC,
 Bootstrap,
 Jquery
 
-# How to Access this 
-
-https://siteavailabilityui.azurewebsites.net/
-
 # Features : 
 
 1. User can able to search the site availability.
