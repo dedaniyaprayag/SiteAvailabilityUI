@@ -1,6 +1,6 @@
 # SiteAvailabilityUI
 
-# Architecture Diagram
+# Flow Diagram
 
 ![Optional Text](Images/siteAvailabilityArch.png)
 
